@@ -12,3 +12,5 @@ Création de bruit selon l'intensité de pression
 	•	Copier/coller ce truc dans le code
 
 2. Lancer le script : bots-go -d (faire glisser ici le dossier complet)
+
+3. Le resultat ici > http://localhost:8000/
