@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>p5Bots Examples</title>
+</head>
+<body>
+   <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+   <script src="p5_scripts/p5.min.js"></script>
+   <script src="p5_scripts/p5.dom.js"></script>
+   <script src="p5_scripts/p5.sound.js"></script>
+   <script src="p5_scripts/p5bots.js"></script>
+   <!-- Swap out the script below with any of the others in example_scripts. -->
+   <script type="text/javascript">
+    var b = p5.board('/dev/cu.usbmodem1421', 'arduino');
+
+    var force = 0;
+    var song;
+
+
+    function preload() {
+      // Load a sound file
+        song = loadSound('daftpunk.mp3');
+    }
+
+
+    var p = b.pin(0, 'ANALOG', 'INPUT');
+    p.read(function(val){
+      console.log(val);
+      force = val;
+    });
+
+    function setup() {
+      createCanvas(displayWidth, displayHeight);
+
+      noise = new p5.Noise('brown');
+      noise.amp(0);
+      noise.start();
+
+      delay = new p5.Delay();
+      delay.process(noise, .12, 0.7, 2300);
+      song.play();
+
+      env = new p5.Env(.01, 0.2, .2, .1);
+
+    }
+
+    function draw() {
+      background(0);
+      fill(255,0,0);
+      rect(0,0,force,50);
+
+      if (force == 0) {
+
+      }
+
+      else {
+      //  song.disconnect(); // so we'll only hear reverb...
+        env.play(noise);
+       // reverb.amp(map(force,0,800,1,1));
+       song.amp(map(force,0,800,1,0));
+
+  // connect soundFile to reverb, process w/
+  // 3 second reverbTime, decayRate of 2%
+        // if (force = 0) song.play();)
+      }
+    }
+  </script>
+
+</body>
+</html>
